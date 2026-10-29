@@ -1,0 +1,189 @@
+/* Base theme */
+:root {
+  --bg-color: #0f1115;
+  --text-color: #e2e8f0;
+  --accent-color: #00ff88;
+  --card-bg: #1a1d24
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Whole web */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 900px;
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Text */
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+header p{
+  color: #94a3b8;
+  margin-bottom: 3rem;
+}
+
+.controls {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+/* Start Microphone */
+.primary-btn {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(226, 232, 240, 0.2);
+}
+
+/* Upload Audio */
+.secondary-btn {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid #334155;
+}
+
+.secondary-btn:hover {
+  background-color: #272c36;
+  border-color: #475569
+}
+
+#audio-upload {
+  display: none;
+}
+
+/* Images */
+.images-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--card-bg);
+}
+
+/* Image state */
+.audio-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) opacity(0.8);
+  transform: scale(1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.label {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.5s ease;
+}
+
+.audio-image.active-glow {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.08);
+}
+
+#Dog.active-glow {
+  box-shadow: inset 0 0 40px rgba(255, 107, 107, 0.8);
+}
+
+#Traffic.active-glow {
+  box-shadow: inset 0 0 40px rgba(255, 217, 61, 0.8);
+}
+
+#DJ.active-glow {
+  box-shadow: inset 0 0 40px rgba(122, 65, 255, 0.8);
+}
+
+.audio-image.active-glow + .label {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--bg-color);
+  border-color: transparent;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress bar and loading screen */
+.hidden {
+  display: none !important;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.progress-bar-container {
+  width: 300px;
+  height: 12px;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border: 1px solid #334155;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background-color: var(--accent-color);
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px var(--accent-color);
+}

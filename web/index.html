@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Classifier AI</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- Loading Screen -->
+     <div id="loading-screen" class="loading-container">
+      <h2>Initializing AI Engine</h2>
+      <div class="progress-bar-container">
+        <div id="progress-bar" class="progress-fill"></div>
+      </div>
+      <p id="progress-text">0%</p>
+     </div>
+
+    <!-- Main Screen -->
+    <div id="main-app" class="app-container hidden">
+      <header>
+        <h1>Audio Context AI</h1>
+        <p>Upload a sound or use your microphone to detect the environment.</p>
+      </header>
+
+      <div class="controls">
+       <!-- Microphone trigger-->
+        <button id="start-mic" class="btn primary-btn">
+         <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
+          <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5z"/>
+         </svg>
+         Start Microphone
+        </button>
+
+        <!-- Audio file upload -->
+        <label class="btn secondary-btn" for="audio-upload">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+          </svg>
+          Upload Audio
+          <input type="file" id="audio-upload" accept="audio/*">
+        </label>
+      </div>
+
+      <!-- Images grid -->
+      <div class="images-grid">
+        <div class="image-wrapper">
+          <img src="images/DogImg.jpg" id="Dog" class="audio-image" alt="Dog">
+          <span class="label">Dog</span>
+        </div>
+        
+        <div class="image-wrapper">
+          <img src="images/TrafficImg.jpg" id="Traffic" class="audio-image" alt="Traffic">
+          <span class="label">Traffic</span>
+        </div>
+
+        <div class="image-wrapper">
+          <img src="images/DJImg.jpg" id="DJ" class="audio-image" alt="DJ">
+          <span class="label">DJ</span>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
