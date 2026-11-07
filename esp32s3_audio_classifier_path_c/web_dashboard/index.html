@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32-S3 Audio Context AI — Dog | Traffic | DJ</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- Optional Loading Screen (only shown when loading Browser TF.js Teacher Mode) -->
+    <div id="loading-screen" class="loading-container hidden">
+      <h2>Initializing Browser YAMNet Teacher Engine</h2>
+      <div class="progress-bar-container">
+        <div id="progress-bar" class="progress-fill"></div>
+      </div>
+      <p id="progress-text">0%</p>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="main-app" class="app-container">
+      <header>
+        <div class="badge-row">
+          <span class="hw-badge">ESP32-S3 + 8 MB Memory</span>
+          <span id="connection-status" class="status-pill">Ready (Select Input Mode)</span>
+        </div>
+        <h1>Audio Context AI</h1>
+        <p id="status-subtitle">ESP32-S3 real-time edge telemetry and acoustic evaluation dashboard</p>
+      </header>
+
+      <!-- Hardware & Browser Controls -->
+      <div class="controls">
+        <!-- 1. USB WebSerial Connection to ESP32-S3 -->
+        <button id="connect-serial" class="btn primary-btn" title="Stream live JSON & LED state from ESP32-S3 over USB">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm4.5 0a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>
+          Connect ESP32-S3 (USB Serial)
+        </button>
+
+        <!-- 2. Wi-Fi WebSocket Connection to ESP32-S3 -->
+        <button id="connect-ws" class="btn secondary-btn" title="Connect to ESP32-S3 WebSocket server over Wi-Fi">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M15.384 6.115a.485.485 0 0 0-.047-.736A12.444 12.444 0 0 0 8 3C5.259 3 2.723 3.882.663 5.379a.485.485 0 0 0-.048.736.518.518 0 0 0 .668.05A11.448 11.448 0 0 1 8 4c2.507 0 4.827.802 6.716 2.164.205.148.49.13.668-.049z"/>
+            <path d="M13.229 8.271a.482.482 0 0 0-.063-.745A9.455 9.455 0 0 0 8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065A8.46 8.46 0 0 1 8 7a8.46 8.46 0 0 1 4.576 1.336c.206.132.48.108.653-.065zm-2.183 2.183c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.611-.091l.015-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.707-.707z"/>
+          </svg>
+          Connect ESP32 Wi-Fi
+        </button>
+
+        <!-- 3. Browser Microphone (YAMNet Teacher Mode) -->
+        <button id="start-mic" class="btn secondary-btn">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
+            <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5z"/>
+          </svg>
+          Browser Mic (Teacher)
+        </button>
+
+        <!-- 4. Audio File Upload -->
+        <label class="btn secondary-btn" for="audio-upload">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+          </svg>
+          Upload Audio
+          <input type="file" id="audio-upload" accept="audio/*">
+        </label>
+      </div>
+
+      <!-- Virtual ESP32-S3 GPIO LED Bar & Telemetry Strip -->
+      <div class="gpio-led-panel">
+        <div class="led-indicator" id="led-Dog">
+          <span class="led-bulb dog-bulb"></span>
+          <span>GPIO 15 LED: <strong>DOG</strong></span>
+        </div>
+        <div class="led-indicator" id="led-Traffic">
+          <span class="led-bulb traffic-bulb"></span>
+          <span>GPIO 16 LED: <strong>TRAFFIC</strong></span>
+        </div>
+        <div class="led-indicator" id="led-DJ">
+          <span class="led-bulb dj-bulb"></span>
+          <span>GPIO 17 LED: <strong>DJ</strong></span>
+        </div>
+        <div class="telemetry-readout" id="telemetry-text">
+          Latency: <strong>-- ms</strong> &nbsp;|&nbsp; RMS: <strong>--</strong>
+        </div>
+      </div>
+
+      <!-- Target Class Status Indicators & Acoustic Event Visualizers -->
+      <div class="images-grid">
+        <div class="image-wrapper" data-sim="Dog">
+          <img src="images/DogImg.jpg" id="Dog" class="audio-image" alt="Dog" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+          <div class="emoji-fallback hidden" id="Dog-fallback">🐕</div>
+          <span class="label">🐕 Dog <small id="prob-Dog"></small></span>
+        </div>
+
+        <div class="image-wrapper" data-sim="Traffic">
+          <img src="images/TrafficImg.jpg" id="Traffic" class="audio-image" alt="Traffic" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+          <div class="emoji-fallback hidden" id="Traffic-fallback">🚦</div>
+          <span class="label">🚦 Traffic <small id="prob-Traffic"></small></span>
+        </div>
+
+        <div class="image-wrapper" data-sim="DJ">
+          <img src="images/DJImg.jpg" id="DJ" class="audio-image" alt="DJ" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+          <div class="emoji-fallback hidden" id="DJ-fallback">🎧</div>
+          <span class="label">🎧 DJ <small id="prob-DJ"></small></span>
+        </div>
+      </div>
+
+      <p class="sim-hint">Manual Telemetry Simulation: Select any card to evaluate interface rendering and virtual GPIO state assertions.</p>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

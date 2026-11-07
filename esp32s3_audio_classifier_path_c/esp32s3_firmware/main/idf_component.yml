@@ -1,0 +1,4 @@
+dependencies:
+  idf: ">=5.0"
+  espressif/esp-tflite-micro: "*"
+  espressif/esp-dsp: "*"

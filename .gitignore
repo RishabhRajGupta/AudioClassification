@@ -1,0 +1,50 @@
+# ==============================================================================
+# Global Repository Git Ignore Rules
+# ==============================================================================
+
+# Object Files and Intermediate Compilation Artifacts
+*.o
+*.obj
+-.o
+*.so
+*.dylib
+*.dll
+*.a
+
+# Binaries, Executables, and Firmware Images
+*.elf
+*.bin
+*.exe
+simulate_esp32s3
+simulate_esp32s3_on_laptop
+
+# Build and Distribution Directories
+build/
+bin/
+out/
+dist/
+
+# ESP-IDF Kconfig and Build Output
+sdkconfig
+sdkconfig.old
+dependencies.lock
+
+# Python Virtual Environments and Bytecode Caches
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+
+# IDE, Editor, and OS Metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.agents/

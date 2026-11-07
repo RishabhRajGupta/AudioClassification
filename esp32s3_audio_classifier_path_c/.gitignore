@@ -1,0 +1,18 @@
+# ==============================================================================
+# ESP32-S3 Audio Classifier Subsystem Git Ignore Rules
+# ==============================================================================
+
+# Simulation Targets
+simulation/simulate_esp32s3
+simulate_esp32s3_on_laptop
+*.o
+
+# ESP-IDF Firmware Build Artifacts
+esp32s3_firmware/build/
+esp32s3_firmware/sdkconfig
+esp32s3_firmware/sdkconfig.old
+esp32s3_firmware/dependencies.lock
+
+# Python ML Pipeline Caches
+ml_pipeline/__pycache__/
+*.py[cod]
